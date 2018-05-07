@@ -59,3 +59,31 @@ public class SpringBlogApplication {
 
 - P.85, 86のノートの内容は、後で日記のURIをidベースからタイムスタンプベースに変更する時に参考になりそうな内容。
 - P.87の内容は、画面のページネーション実装する際に、ベースになりそうな内容。
+
+## 3.3節相当の実装
+
+- RESTアプリ（@RestControllerベース）からWeb画面アプリ（@Controllerベース）への書き換えにあたり、メソッドは以下のように変わる。
+
+```Java
+// @RestController
+@GetMapping
+List<Article> getArticles(Article article) {
+    List<Article> articles = articleService.findAll();
+    return articles;
+}
+
+// @Controller
+@GetMapping
+String list(Model model) {
+    List<Article> articles = articleService.findAll();
+    model.addAttribute("articles", articles);
+    return "articles/list";
+}
+```
+
+- RESTアプリだとArticleのリストをそのまま戻していたが、WebアプリだとArticleのリストはmodelに突っ込んで、戻り値は画面名（String）になる。
+- modelは処理結果を格納しておくもの。
+
+### 3.3.1
+
+- 表示はリンクでもいい気がしたけど、他と足並み揃えた。削除はpostじゃなくてgetでもできるはずなので、getにした。

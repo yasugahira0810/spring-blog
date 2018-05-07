@@ -17,9 +17,9 @@ public class SpringBlogApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String...strings) throws Exception {
-		Article created = articleRepository.save(new Article(null, LocalDateTime.now(), "ぬるぬるについて考えた", "ぬるぬる"));
-		System.out.println(created + " is created!");
-		articleRepository.findAllOrderByPostDate().forEach(System.out::println);
+//		Article created = articleRepository.save(new Article(null, LocalDateTime.now(), "ぬるぬるについて考えた", "ぬるぬる"));
+//		System.out.println(created + " is created!");
+//		articleRepository.findAllOrderByPostDate().forEach(System.out::println);
 	}
 	
 	public static void main(String[] args) {
