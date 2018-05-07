@@ -8,20 +8,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.spring.blog.domain.Article;
-import com.spring.blog.service.ArticleService;
+import com.spring.blog.repository.ArticleRepository;
 
 @SpringBootApplication
 public class SpringBlogApplication implements CommandLineRunner {
 	@Autowired
-	ArticleService ArticleService;
+	ArticleRepository articleRepository;
 	
 	@Override
 	public void run(String...strings) throws Exception {
-		ArticleService.save(new Article(1, LocalDateTime.now(),"ほげほげ試してみた", "ほげほげ"));
-		ArticleService.save(new Article(2, LocalDateTime.now(),"ふがふが参加レポート", "ふがふが"));
-		ArticleService.save(new Article(3, LocalDateTime.now(),"バーバーツール", "バーバー"));
-		
-		ArticleService.findAll().forEach(System.out::println);
+		Article created = articleRepository.save(new Article(null, LocalDateTime.now(), "ぬるぬるについて考えた", "ぬるぬる"));
+		System.out.println(created + " is created!");
+		articleRepository.findAllOrderByPostDate().forEach(System.out::println);
 	}
 	
 	public static void main(String[] args) {
