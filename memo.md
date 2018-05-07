@@ -49,3 +49,13 @@ public class SpringBlogApplication {
 ### TODO
 
 - findAllOrderByPostDateで時刻順でソートされることを確認するテストを作成する
+
+## 3.1節相当の実装
+
+- サービス・クラスのsaveメソッドはcreateメソッドとupdateメソッドに別れたが、やっていることは同じ。
+- コントローラは、クラスに@RequestMapping("api/customers")みたいなパス付きのアノテーションを書いた上で、メソッドには@GetMapping, @PutMapping, @PostMapping, @DeleteMappingを使う、@GetMappingのパスは@RequestMappingからの相対パスになる、という感じのものと理解した。
+
+## 3.2節相当の実装（と言いつつ読んだだけ）
+
+- P.85, 86のノートの内容は、後で日記のURIをidベースからタイムスタンプベースに変更する時に参考になりそうな内容。
+- P.87の内容は、画面のページネーション実装する際に、ベースになりそうな内容。

@@ -13,11 +13,23 @@ public class ArticleService {
 	@Autowired
 	ArticleRepository articleRepository;
 	
-	public Article save(Article article) {
+	public List<Article> findAll() {
+		return articleRepository.findAllOrderByPostDate();
+	}
+	
+	public Article findOne(Integer id) {
+		return articleRepository.findById(id).orElse(null);
+	}
+	
+	public Article create(Article article) {
 		return articleRepository.save(article);
 	}
 	
-	public List<Article> findAll() {
-		return articleRepository.findAll();
+	public Article update(Article article) {
+		return articleRepository.save(article);
+	}
+	
+	public void delete(Integer id) {
+		articleRepository.deleteById(id);
 	}
 }
