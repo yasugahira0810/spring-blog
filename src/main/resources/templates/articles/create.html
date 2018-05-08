@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>BLOG TITLE</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div>
+	<form th:action="@{/articles/create}" th:object="${articleForm}" method="post">
+		<dl>
+			<dt><label for="title">タイトル</label></dt>
+			<dd>
+				<input type="text" id="title" name="title" th:field="*{title}" th:errorclass="error-input" value="ちょめちょめ試してみた"/>
+				<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-messages">error!</span>
+			</dd>
+			<dt><label for="bodyText">本文</label></dt>
+			<dd>
+				<textarea rows="3" cols="80" id="bodyText" name="bodyText" th:field="*{bodyText}" th:errorclass="error-input">ちょめちょめしてみたらちょめちょめだった。ちょめちょめしてみたらちょめちょめだった。ちょめちょめしてみたらちょめちょめだった。ちょめちょめしてみたらちょめちょめだった。</textarea>
+				<span th:if="${#fields.hasErrors('bodyText')}" th:errors="*{bodyText}" class="error-messages">error!</span>
+			</dd>
+		</dl>
+		<input type="submit" value="作成"/>
+		<input type ="hidden" name="postDate" th:field="*{postDate}" th:value="${articleForm.getPostDate()}"/>
+		
+	</form>
+</div>
+</body>
+</html>

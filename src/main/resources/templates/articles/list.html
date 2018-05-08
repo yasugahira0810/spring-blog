@@ -5,6 +5,9 @@
     <title>BLOG TITLE</title>
 </head>
 <body>
+<form th:action="@{/articles/create}" method="get">
+	<input type="submit" name="form" value="記事を書く"/>
+</form>
 <table>
 	<tr th:each="article : ${articles}">
 		<td th:text="${article.postDate}">2017-05-07T15:57:18.434</td>

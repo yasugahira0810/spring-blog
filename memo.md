@@ -87,3 +87,22 @@ String list(Model model) {
 ### 3.3.1
 
 - 表示はリンクでもいい気がしたけど、他と足並み揃えた。削除はpostじゃなくてgetでもできるはずなので、getにした。
+
+# 20180508
+
+### 3.3.2
+
+- コントローラの中の@ModelAttributeも、@RequestMappingあってのアノテーション。  
+  @GetMappingなどのついたメソッドの前に実行され、結果は自動でModelに格納される。  
+  model.addAttribute(new CustomerForm());という感じで、()内は@ModelAttributeの戻り値。
+- 投稿日時の取得で試行錯誤した。以下のような方法を考えた。
+  1. 投稿日時をHTMLの何かしらの機能で取得してhiddenで送付
+  2. 投稿日時をjavascriptで取得してhiddenで送付
+  3. 投稿日時をthymeleaf(Java)で取得してhiddenで送付
+  4. サーバ側にリクエストが送られてきてから、Java側で設定
+- ググるとjavascriptやPHPでやるサンプルが出てきたので、HTML自体には該当の機能はないと判断して1は切った。
+- 2と3だったら3がいいと思った。いろいろな機能使いたくないので。3のやり方は[こちら](http://javatechnology.net/spring/thymeleaf-java-logic/)が非常に参考になった。
+- 3と4どちらにしようと思ったが、ArticleControllerはFormから受け取った値をドメインオブジェクト(article)にコピーしているだけなので、ここでFormやドメインオブジェクトはいじりたくないと思った。
+- あるべき姿を考えても、3と4だったらボタンが押された3の方がいい気がしたので、3で実装することにした。
+- 最初Article.javaにgetPostDate()を実装したが、そうするとlist.htmlに表示される記事の投稿日時が画面描画した時刻になってしまって、変だった。
+- その後getPostDate()を実装するのはArticle.javaではなくArticleForm.javaだと気づき、そちらに実装したところ、うまく動くようになった。

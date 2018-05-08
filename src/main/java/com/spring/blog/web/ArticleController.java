@@ -2,11 +2,15 @@ package com.spring.blog.web;
 
 import com.spring.blog.domain.Article;
 import com.spring.blog.service.ArticleService;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -18,12 +22,33 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     ArticleService articleService;
+    
+    @ModelAttribute
+    ArticleForm setUpForm() {
+    		return new ArticleForm();
+    }
 
     @GetMapping
     String list(Model model) {
         List<Article> articles = articleService.findAll();
         model.addAttribute("articles", articles);
         return "articles/list";
+    }
+    
+    @GetMapping(path = "create")
+    String newArticle() {
+    		return "articles/create";
+    }
+    
+    @PostMapping(path = "create")
+    String create(@Validated ArticleForm form, BindingResult result, Model model) {
+    		if (result.hasErrors()) {
+    			return newArticle();
+    		}
+    		Article article = new Article();
+    		BeanUtils.copyProperties(form, article);
+    		articleService.create(article);
+    		return "redirect:/articles";
     }
 
 //    @GetMapping(path = "{id}")
