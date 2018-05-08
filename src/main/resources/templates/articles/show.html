@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>BLOG TITLE</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap-theme.min.css"
+          th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap-theme.min.css}"/>
+</head>
+<body>
+<div class="container">
+	<div class="col-sm-12">
+		<fieldset>
+			<h1 th:text="${article.title}" class="text-primary text-center">ほげほげ試してみた</h1>
+			<h3 th:text="${article.bodyText}" class="text-muted">ほげほげほげほげほげほげほげほげほげほげほげほげほげ</h3>
+		</fieldset>
+		<form th:action="@{/articles/show}" method="get">
+			<input class="btn btn-secondary" type="submit" name="goToTop" value="戻る"/>
+		</form>
+	</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+        th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
+</body>
+</html>

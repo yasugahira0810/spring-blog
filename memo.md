@@ -106,3 +106,49 @@ String list(Model model) {
 - あるべき姿を考えても、3と4だったらボタンが押された3の方がいい気がしたので、3で実装することにした。
 - 最初Article.javaにgetPostDate()を実装したが、そうするとlist.htmlに表示される記事の投稿日時が画面描画した時刻になってしまって、変だった。
 - その後getPostDate()を実装するのはArticle.javaではなくArticleForm.javaだと気づき、そちらに実装したところ、うまく動くようになった。
+
+### 3.3.3
+
+- @GetMapping(path = "edit", params = "form")のformは、/article/edit?form&id={id}のformと紐付いたものと気づいた。
+- goToTopメソッド用意したが、ここにもバリデーションが効いてしまっていて、タイトルなどが空の状態だとバリデーションエラーで戻れなくなってしまうことに気づいた。
+- BootStrapのバージョンが、書籍が3.3.7のところ、Mavenリポジトリの最新は4.1.0になっていたので、アップデート。  
+  invalid LOC headerというエラーが出てアプリが動かなくなったので、一度.m2を削除してmaven install仕直し。  
+  Bootstrapのバージョンアップで手間取ったが、実際はCDNの参照先を変えれば良かっただけなのでは？という気がしてきた。
+- 先に書いたgetPostDate()のやつ、実はうまく言っていなかった。getPostDate()はLombookか何かが自動で設定している名前のようで、うまくいっているように見えていただけだった。結局4の実装をしてしまった。
+- @PostMapping(path = "edit", params = "goToTop")のところ、書籍だと@RequestMapping, 訂正表だと@PostMapping, GitHubのコードだと@GetMappingで、どれが正しいんだ？と思ったが、これは@PostMappingが正しい。なぜならgoToTopは戻るボタン、つまりform、つまりPOSTメソッドが使われているから。
+  + paramsという名前から、GETメソッドのパラメータを表しているのかと思ったが、そうではないらしい。このparamsはhtmlの<input class="btn btn-secondary" type="submit" name="goToTop" value="戻る"/>のnameと紐付いているらしい。
+- 更新処理のところでハマって、結果的に元よりいい感じにした。
+  + 元はcustomerをnewして、copyPropertiesで、更新したlastNameとfirstNameを  
+    customerに渡す。でもこれだとidが入っていないから、idをセットする。
+  + このやり方を真似たところpostDateの設定がうまくいかなかった。postDateは  
+    @RequestParamで渡していない、かつ更新対象でもないのでformにもないため、  
+    DBに反映するタイミングでnullがセットされてしまい、エラーになっていた。  
+    そこで、articleをnewするのではなく、findOneで更新対象のデータを事前に  
+    とってきて、それを更新したデータで上書きする形にした。
+  + 元よりいい方法だと思ったけど、editForの方でfindOne(id)していて、二度手間だな。。。まぁそのまま進む。
+  
+
+```java
+@PostMapping(path = "edit")
+    String edit(@RequestParam Integer id, @Validated CustomerForm form, BindingResult result) {
+        if (result.hasErrors()) {
+            return editForm(id, form);
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(form, customer);
+        customer.setId(id);
+        customerService.update(customer);
+        return "redirect:/customers";
+    }
+
+@PostMapping(path = "edit")
+    String edit(@RequestParam Integer id, @Validated ArticleForm form, BindingResult result) {
+        if (result.hasErrors()) {
+            return editForm(id, form);
+        }
+        Article article = articleService.findOne(id);
+        BeanUtils.copyProperties(form, article);
+        articleService.update(article);
+        return "redirect:/articles";
+    }
+```

@@ -23,4 +23,5 @@ public class Article {
 	private String title;
 	@Column(nullable = false)
 	private String bodyText;
+
 }

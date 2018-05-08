@@ -15,9 +15,5 @@ public class ArticleForm {
 	@NotNull
 	@Size(min = 1, max = 2000)
 	private String bodyText;
-	private LocalDateTime postDate;
-	
-	public LocalDateTime getPostDate() {
-		return LocalDateTime.now();
-	}
+
 }

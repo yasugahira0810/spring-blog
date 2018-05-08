@@ -5,16 +5,13 @@ import com.spring.blog.service.ArticleService;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -47,33 +44,55 @@ public class ArticleController {
     		}
     		Article article = new Article();
     		BeanUtils.copyProperties(form, article);
+    		article.setPostDate(LocalDateTime.now());
     		articleService.create(article);
     		return "redirect:/articles";
     }
+    
+    @PostMapping(path = "create", params = "goToTop")
+    String create2list() {
+    		return "redirect:/articles";
+    }
+    
+    @GetMapping(path = "show")
+    String show(@RequestParam Integer id, Model model) {
+    		Article article = articleService.findOne(id);
+        model.addAttribute("article", article);
+        return "articles/show";
+    }
+    
+    @GetMapping(path = "show", params = "goToTop")
+    String show2list() {
+    		return "redirect:/articles";
+    }
+    
+    @GetMapping(path = "edit", params = "form")
+    String editForm(@RequestParam Integer id, ArticleForm form) {
+    		Article article = articleService.findOne(id);
+    		BeanUtils.copyProperties(article, form);
+    		return "articles/edit";
+    }
+    
+    @PostMapping(path = "edit")
+    String edit(@RequestParam Integer id, @Validated ArticleForm form, BindingResult result) {
+    if (result.hasErrors()) {
+    		return editForm(id, form);
+    }
+    Article article = articleService.findOne(id);
+    BeanUtils.copyProperties(form, article);
+    articleService.update(article);
+    	return "redirect:/articles";
+    }
+        
+    @PostMapping(path = "edit", params = "goToTop")
+    String edit2list() {
+    		return "redirect:/articles";
+    }
+    
+    @GetMapping(path = "delete")
+    String delete(@RequestParam Integer id) {
+    		articleService.delete(id);
+    		return "redirect:/articles";
+    }
 
-//    @GetMapping(path = "{id}")
-//    Article getArticle(@PathVariable Integer id) {
-//        Article Article = articleService.findOne(id);
-//        return Article;
-//    }
-//
-//    @PostMapping
-//    ResponseEntity<Article> postArticles(@RequestBody Article Article, UriComponentsBuilder uriBuilder) {
-//        Article created = articleService.create(Article);
-//        URI location = uriBuilder.path("api/Articles/{id}")
-//                .buildAndExpand(created.getId()).toUri();
-//        return ResponseEntity.created(location).body(created);
-//    }
-//
-//    @PutMapping(path = "{id}")
-//    Article putArticle(@PathVariable Integer id, @RequestBody Article Article) {
-//        Article.setId(id);
-//        return articleService.update(Article);
-//    }
-//
-//    @DeleteMapping(path = "{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    void deleteArticle(@PathVariable Integer id) {
-//        articleService.delete(id);
-//    }
 }
