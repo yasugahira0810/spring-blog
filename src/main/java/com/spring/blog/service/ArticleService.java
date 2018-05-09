@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.blog.domain.Article;
+import com.spring.blog.domain.User;
 import com.spring.blog.repository.ArticleRepository;
 
 @Service
@@ -21,7 +22,8 @@ public class ArticleService {
 		return articleRepository.findById(id).orElse(null);
 	}
 	
-	public Article create(Article article) {
+	public Article create(Article article, User user) {
+		article.setUser(user);
 		return articleRepository.save(article);
 	}
 	

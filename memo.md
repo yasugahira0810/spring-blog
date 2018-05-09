@@ -158,3 +158,7 @@ String list(Model model) {
 ## 3.4
 
 - 当初「set baselineOnMigrate to true to initialize the schema history table.」というエラーが出ていたので、ググって、application.propertiesに「spring.flyway.baseline-on-migrate=true」て書いたらエラー出なくなった。その後はこれコメントアウトしてもエラーは出なくなった。
+
+## 3.5
+
+- 書籍通りの内容は特に問題なく実装できた。ただブログ用途としてはおかしな状態なので、この後変更していく。

@@ -23,5 +23,7 @@ public class Article {
 	private String title;
 	@Column(nullable = false)
 	private String bodyText;
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(nullable = true, name = "username")
+	private User user;
 }

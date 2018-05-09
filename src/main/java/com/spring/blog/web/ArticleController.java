@@ -2,9 +2,11 @@ package com.spring.blog.web;
 
 import com.spring.blog.domain.Article;
 import com.spring.blog.service.ArticleService;
+import com.spring.blog.service.LoginUserDetails;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,14 +40,14 @@ public class ArticleController {
     }
     
     @PostMapping(path = "create")
-    String create(@Validated ArticleForm form, BindingResult result, Model model) {
+    String create(@Validated ArticleForm form, BindingResult result, Model model, @AuthenticationPrincipal LoginUserDetails userDetails) {
     		if (result.hasErrors()) {
     			return newArticle();
     		}
     		Article article = new Article();
     		BeanUtils.copyProperties(form, article);
     		article.setPostDate(LocalDateTime.now());
-    		articleService.create(article);
+    		articleService.create(article, userDetails.getUser());
     		return "redirect:/articles";
     }
     
