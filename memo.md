@@ -126,7 +126,7 @@ String list(Model model) {
     そこで、articleをnewするのではなく、findOneで更新対象のデータを事前に  
     とってきて、それを更新したデータで上書きする形にした。
   + 元よりいい方法だと思ったけど、editForの方でfindOne(id)していて、二度手間だな。。。まぁそのまま進む。
-  
+
 
 ```java
 @PostMapping(path = "edit")
@@ -152,3 +152,9 @@ String list(Model model) {
         return "redirect:/articles";
     }
 ```
+
+# 20180509
+
+## 3.4
+
+- 当初「set baselineOnMigrate to true to initialize the schema history table.」というエラーが出ていたので、ググって、application.propertiesに「spring.flyway.baseline-on-migrate=true」て書いたらエラー出なくなった。その後はこれコメントアウトしてもエラーは出なくなった。
