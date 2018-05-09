@@ -13,7 +13,7 @@
 <div class="container">
 	<div class="col-sm-12">
 		<p>
-			<span sec:authentication="principal.user.username">duke</span>さんログイン中。
+			<!-- <span sec:authentication="principal.user.username">duke</span>さんログイン中。 -->
 		</p>
 		<form th:action="@{/logout}" method="post"><input type="submit" class="btn btn-secondary btn-sm" value="ログアウト" /></form>
 		<fieldset>

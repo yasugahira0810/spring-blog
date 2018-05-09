@@ -162,3 +162,14 @@ String list(Model model) {
 ## 3.5
 
 - 書籍通りの内容は特に問題なく実装できた。ただブログ用途としてはおかしな状態なので、この後変更していく。
+
+## 認証・認可改善
+
+- SecurityConfigに「.antMatchers("/loginForm", "/articles", "/articles/list", "/articles/show").permitAll()」て書くことで、認証前でもブログが見える状態にはした。
+- ユーザが一人であれば一応使える状態。（複数人だと、user1がuser2の記事を消せてしまう。）
+- ただ存在しないURLやlocalhost:8080/のリダイレクト先がloginFormになってしまっていて、この点を修正したいがそこでハマっている。
+  + 具体的には、デフォルトのリダイレクト先は/articles/listにして、ログインしたい人は/articles/listのボタンからログインフォームに遷移する形にしたい。
+  + 存在しないURLやlocalhost:8080/のリダイレクト先がloginFormになるのはSpring Securityのデフォルトの動作で、これを変更する必要がある。設定一発でいけどうな気がしたが、どうもそうではないらしい。
+  + 参考になりそうなページはこのあたり[1](https://ishiis.net/2016/08/27/spring-security-custom-authentication/), [2](http://d.hatena.ne.jp/ocs/?of=17)。AuthenticationEntryPointとかbuildRedirectUrlToLoginPageとかをちゃんと調べる必要がある。
+- とりあえずログイン画面に/article/listへのボタンをつけた。
+- 現状だとユーザがログインしているかしていないかがわからないので、次はそこをわかるようにしたい。ログインしてたらボタンを表示する、みたいな処理を入れたい。
