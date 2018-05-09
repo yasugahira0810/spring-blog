@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .usernameParameter("username").passwordParameter("password")
             .and()
             .logout()
-                    .logoutSuccessUrl("/articles");
+                    .logoutSuccessUrl("/loginForm");
     }
 
     @Bean

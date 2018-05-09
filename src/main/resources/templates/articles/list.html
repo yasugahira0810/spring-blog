@@ -12,15 +12,19 @@
 <body>
 <div class="container">
 	<div class="col-sm-12">
-		<p>
-			<!-- <span sec:authentication="principal.user.username">duke</span>さんログイン中。 -->
-		</p>
-		<form th:action="@{/logout}" method="post"><input type="submit" class="btn btn-secondary btn-sm" value="ログアウト" /></form>
-		<fieldset>
+		<fieldset sec:authorize="hasRole('ROLE_USER')">
+			<legend>ログアウト</legend>
+			<form th:action="@{/logout}" method="post" ><input type="submit" class="btn btn-secondary btn-sm" value="ログアウト" /></form>
 			<legend>新規投稿</legend>
 			<form th:action="@{/articles/create}" class="form-horizontal" method="get">
 				<input class="btn btn-primary" type="submit" name="form" value="記事を書く"/>
 			</form>
+		</fieldset>
+		<fieldset sec:authorize="!hasRole('ROLE_USER')">
+			<legend>ログイン</legend>
+			<form th:action="@{/login}" method="get" ><input type="submit" class="btn btn-secondary btn-sm" value="ログイン" /></form>
+		</fieldset>
+		<fieldset>
 			<legend>記事一覧</legend>
 			<table class="table table-striped table-bordered table-condensed">
 				<tr>
@@ -41,13 +45,13 @@
 							<input type="hidden" name="id" th:value="${article.id}"/>
 						</form>
 					</td>
-					<td>
+					<td sec:authorize="hasRole('ROLE_USER')">
 						<form th:action="@{/articles/edit}" method="get">
 							<input class="btn btn-success" type="submit" name="form" value="編集"/>
 							<input type="hidden" name="id" th:value="${article.id}"/>
 						</form>
 					</td>
-					<td>
+					<td sec:authorize="hasRole('ROLE_USER')">
 						<form th:action="@{/articles/delete}" method="get">
 							<input class="btn btn-danger" type="submit" name="form" value="削除"/>
 							<input type="hidden" name="id" th:value="${article.id}"/>

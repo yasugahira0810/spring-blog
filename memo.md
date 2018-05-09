@@ -163,7 +163,7 @@ String list(Model model) {
 
 - 書籍通りの内容は特に問題なく実装できた。ただブログ用途としてはおかしな状態なので、この後変更していく。
 
-## 認証・認可改善
+## 認証改善
 
 - SecurityConfigに「.antMatchers("/loginForm", "/articles", "/articles/list", "/articles/show").permitAll()」て書くことで、認証前でもブログが見える状態にはした。
 - ユーザが一人であれば一応使える状態。（複数人だと、user1がuser2の記事を消せてしまう。）
@@ -173,3 +173,9 @@ String list(Model model) {
   + 参考になりそうなページはこのあたり[1](https://ishiis.net/2016/08/27/spring-security-custom-authentication/), [2](http://d.hatena.ne.jp/ocs/?of=17)。AuthenticationEntryPointとかbuildRedirectUrlToLoginPageとかをちゃんと調べる必要がある。
 - とりあえずログイン画面に/article/listへのボタンをつけた。
 - 現状だとユーザがログインしているかしていないかがわからないので、次はそこをわかるようにしたい。ログインしてたらボタンを表示する、みたいな処理を入れたい。
+
+## 認可改善
+
+- 思ったよりずっとサクッといった。Spring Security便利すぎる。
+  + Spring SecurityにはADMIN権限とUSER権限がデフォルトで用意されているっぽい。  
+  このアプリはログインするとUSER権限がつくので、ログアウトなどログイン済みのユーザに見せたい項目はsec:authorize="hasRole('ROLE_USER')"、ログインなど未ログインのユーザに見せたい項目の制御はsec:authorize="!hasRole('ROLE_USER')"のようにやる。
