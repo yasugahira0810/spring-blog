@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <title>ログインフォーム</title>
+    <meta charset="UTF-8"/>
+    <title th:text="#{blog.title}">BLOG TITLE</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
           th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap-theme.min.css"
@@ -12,7 +12,8 @@
 <body>
 
 <div class="container">
-    <h1>BLOG TITLE</h1>
+	<h1 th:text="#{blog.title}" class="text-center">BLOG TITLE</h1>
+	<h3 th:text="#{blog.overview}" class="font-italic text-muted text-center">BLOG OVERVIEW</h3>
     <form class="form-signin" method="post" th:action="@{/login}">
         <h2 class="form-signin-heading">ログインフォーム</h2>
 
