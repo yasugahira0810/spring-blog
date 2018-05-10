@@ -31,6 +31,9 @@ public class ArticleController {
     String list(Model model) {
         List<Article> articles = articleService.findAll();
         model.addAttribute("articles", articles);
+        System.out.println("******************************************");
+		articles.forEach(System.out::println);
+        System.out.println("******************************************");
         return "articles/list";
     }
     
@@ -60,6 +63,10 @@ public class ArticleController {
     String show(@RequestParam Integer id, Model model) {
     		Article article = articleService.findOne(id);
         model.addAttribute("article", article);
+        //article.setBodyText(article.getBodyText().replaceAll("\n", "<br />"));
+        System.out.println("==========================================");
+		System.out.println(article);
+        System.out.println("==========================================");
         return "articles/show";
     }
     
