@@ -31,17 +31,13 @@
 			<legend>記事一覧</legend>
 			<table class="table table-striped table-bordered table-condensed">
 				<tr>
-					<th>ID</th>
 					<th>投稿時刻</th>
 					<th>タイトル</th>
-					<th>ユーザ</th>
 					<th colspan="3">操作</th>
 				</tr>
 				<tr th:each="article : ${articles}">
-					<td th:text="${article.id}">100</td>
-					<td th:text="${article.postDate}">2017-05-07T15:57:18.434</td>
+					<td th:text="*{#temporals.format(article.postDate, 'yyyy年MM月dd日 HH時mm分')}">2017年05月07日 15時57分</td>
 					<td th:text="${article.title}">ほげほげ試してみた</td>
-					<td th:text="${article.user.username}">duke</td>
 					<td>
 						<form th:action="@{/articles/show}" method="get">
 							<input class="btn btn-primary" type="submit" name="form" value="表示"/>
