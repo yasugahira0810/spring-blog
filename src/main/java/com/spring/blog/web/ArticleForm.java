@@ -1,7 +1,5 @@
 package com.spring.blog.web;
 
-import java.time.LocalDateTime;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
