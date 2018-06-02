@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -30,6 +31,7 @@ public class ArticleController {
     @GetMapping
     String list(Model model) {
         List<Article> articles = articleService.findAll();
+        Collections.reverse(articles); // 最新の記事をブログ上部に表示するためにリストを反転
         model.addAttribute("articles", articles);
         return "articles/list";
     }
