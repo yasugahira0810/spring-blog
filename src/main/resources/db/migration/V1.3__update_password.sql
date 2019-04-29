@@ -1,2 +1,0 @@
-UPDATE users SET encoded_password = '$2a$10$DQraKJUuRUzJyNFNBOCBueckJnpqsgsrGFa/5Yy4hF8LvEGJjQo3y' WHERE username = 'user1' /*秘密*/;
-UPDATE users SET encoded_password = '$2a$10$DQraKJUuRUzJyNFNBOCBueckJnpqsgsrGFa/5Yy4hF8LvEGJjQo3y' WHERE username = 'user2' /*秘密*/;

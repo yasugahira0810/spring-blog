@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - SpringBlogApplication",
+            "request": "launch",
+            "mainClass": "com.spring.blog.SpringBlogApplication",
+            "projectName": "spring-blog"
+        }
+    ]
+}
